@@ -10,3 +10,8 @@ See the README.md files in each folder for more information about how to use the
 ### PDF Cleaner
 
 This script will extract text from a PDF file.
+
+
+### ZMS
+
+A collection of scripts written by Romi Hill (Appen) and Zara Maxwell-Smith (CoEDL), for text extraction from PDF (and other format) files, corpus compilation and cleaning, and experiments with external lexicons for cleaning and corpus analysis.
