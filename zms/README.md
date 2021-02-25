@@ -8,7 +8,9 @@ This pipeline currently has 3 sections:
 
 It has been developed for use with multilingual teaching resources (Indonesian and English) but could prove helpful with other multilingual data.
 
-## 1. Text extraction  - convertToText.py
+## 1. Text extraction 
+
+`convertToText.py`
 
 The text extraction section was created by Romi Hill (Appen) for Zara Maxwell-Smith (CoEDL).
 
@@ -48,39 +50,36 @@ The script will attempt to maintain formatting in the output. To discard formatt
 python3 convertToText.py -n
 ```
 
-## 2. Corpus compilation and cleaning - createCleanCorpus.py
+## 2. Corpus compilation and cleaning 
+
+`createCleanCorpus.py`
 
 Takes all .txt files in a folder (including subfolders), reads as a corpus and provides a few basic cleaning needs. Created by Romi Hill (Appen) and Zara Maxwell-Smith (CoEDL).
 
 This script was developed during a project to examine Indonesian teaching resources (The Indonesian Way).
 
-It will not run as one program, but is intended to step through a new corpus.
-As you become familiar with the noise in your data you may wish to ignore some sections
-or adapt others for a specific problem.
+It will not run as one program, but is intended to step through a new corpus. As you become familiar with the noise in your data you may wish to ignore some sections or adapt others for a specific problem.
 
 The initial section has broad sweep cleaning functionality, narrowing into specific tasks.
 
-The section '''Cleaning after manual annotation''' writes a list of corpus types to csv file for manual annotation.
-The csv file can then be manually annotated and read back in to remove/alter specific strings.
+The section '''Cleaning after manual annotation''' writes a list of corpus types to csv file for manual annotation.  The csv file can then be manually annotated and read back in to remove/alter specific strings.
 
-Some sections are useful in cleaning any corpus (lowercasing, numeral identification, etc.) but others
-are very specific to working with Indonesian or to working with language teaching resources, or both.
+Some sections are useful in cleaning any corpus (lowercasing, numeral identification, etc.) but others are very specific to working with Indonesian or to working with language teaching resources, or both.
 
-The scripts can be used in conjunction with TIW_Experiments.py to remove dominant languages from your corpus.
-This helps to reveal noise as well as other languages present in the corpus.
+The scripts can be used in conjunction with TIW_Experiments.py to remove dominant languages from your corpus. This helps to reveal noise as well as other languages present in the corpus.
 
-##
-3. Experiments with external lexicons for cleaning and corpus analysis - TIW_Experiments.py
-##
 
-Compares the corpus (thus far used with a set of Indonesian teaching resources)
-to English, Indonesian, Javanese, Sundanese lexicons.
-Uses NLTK packages to produce word frequency and frequency distribution plots.
-Created by Zara Maxwell-Smith.
+## 3. Experiments with external lexicons for cleaning and corpus analysis 
+
+`TIW_Experiments.py`
+
+Compares the corpus (thus far used with a set of Indonesian teaching resources) to English, Indonesian, Javanese, Sundanese lexicons.
+Uses NLTK packages to produce word frequency and frequency distribution plots. Created by Zara Maxwell-Smith.
 
 Lexicons are drawn from a range of sources. Sorted by language:
 
-##ENGLISH
+
+### ENGLISH
 
 CMU pronunciation dictionary
 http://www.speech.cs.cmu.edu/cgi-bin/cmudict?in=complex
@@ -88,10 +87,9 @@ http://www.speech.cs.cmu.edu/cgi-bin/cmudict?in=complex
 Australian English pronunciation dictionary
 https://github.com/twocs/australian-lexicon/find/master
 
-dict/words system file
-from Mac system file
+/usr/share/dict/words from Mac system file
 
-##INDONESIAN
+### INDONESIAN
 
 Bahasa Wordnet
 https://sourceforge.net/p/wn-msa/tab/HEAD/tree/trunk/wn-msa-all.tab
@@ -102,14 +100,12 @@ https://github.com/nasalsabila/kamus-alay/blob/master/colloquial-indonesian-lexi
 Korpus Indonesia
 https://korpusindonesia.kemdikbud.go.id
 
-##JAVANESE
+### JAVANESE
 
 Google Javanese data
 https://github.com/google/language-resources/blob/master/jv/data/lexicon.tsv
 
-##SUNDANESE
+### SUNDANESE
 
 Google Sundanese data
 https://github.com/google/language-resources/blob/master/su/data/lexicon.tsv
-
-Thank you Ben and Romi!
