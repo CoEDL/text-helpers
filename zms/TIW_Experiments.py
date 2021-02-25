@@ -236,18 +236,18 @@ for token in engAllDictLex:
 engAllLex = set(engAll)
 
 
-## Indonesian wordlists
+# Indonesian wordlists
 
 KOINIndLex = set(KOINInd)
 wordnetIndLex = set(wordnetInd)
 collIndInternetLex = set(collIndInternet)
 collIndInternetFormalLex = set(collIndInternetFormal)
 
-## Other langauges of Indonesian wordlists
+# Other langauges of Indonesian wordlists
 googleJavLex = set(googleJav)
 googleSundLex = set(googleSund)
 
-## Remove English and Indonesian wordlists with more formal tendency
+# Remove English and Indonesian wordlists with more formal tendency
 
 residMinusEng = teachRLex - engAllLex
 residMinusKOIN = residMinusEng - KOINIndLex
@@ -256,7 +256,7 @@ residMinuswordnet = residMinusKOIN - wordnetIndLex
 residMinuscollIndInternetFormal = residMinuswordnet - collIndInternetFormalLex
 
 len(list(residMinuscollIndInternetFormal))
-#
+
 # c = {'a', 'b', 'z'}
 # d = {'a', 'b', '11', 'v'}
 #
@@ -281,8 +281,9 @@ minus3Ind = minus2Ind - wordnetIndLex
 
 
 '''
-finds words in common between Indonesian lists and English lists 
+Finds words in common between Indonesian lists and English lists 
 to create a list of words which are more likely to be Indonesian.
+
 These can then be added back in to the Indonesian list/removed from
 the English list so that they don't get subtracted later on
 '''
@@ -293,7 +294,6 @@ for word in wordnetIndLex:
     if word in engAllDictLex:
         if word in collIndInternetFormalLex:
             shared.append(word)
-
 
 print(shared)
 
@@ -315,11 +315,8 @@ engSet = set(eng)
 
 percenEngTokens = len(eng)/len(teachR)
 
-# print(f"percentage of Eng tokens {percenEngTokens}")
-        
 # % of eng types 
-## does not work - not sure how to write maths in python
-
+# does not work - not sure how to write maths in python
 # percenEngTypes = ((len(list[(teachRLex)]-len(minus4Eng))//(len(teachR)))
 
 # Write leftovers to file
