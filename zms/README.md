@@ -1,59 +1,56 @@
+# Text Cleaning pipeline
+
 This pipeline currently has 3 sections:
 1. Text extraction
 2. Corpus compilation and cleaning
 3. Experiments with external lexicons for cleaning and corpus analysis
 
 
+It has been developed for use with multilingual teaching resources (Indonesian and English) but could prove helpful with other multilingual data.
 
-It has been developed for use with multilingual teaching resources (Indonesian and English) but could prove
-helpful with other multilingual data.
+## 1. Text extraction  - convertToText.py
 
-##
-1. Text extraction  - convertToText.py
-##
 The text extraction section was created by Romi Hill (Appen) for Zara Maxwell-Smith (CoEDL).
 
-It has primarily been created and tested on PDF files but can also handle .doc and possibly PNG and JPEG.
-It uses OCR (Optical Character Recognition) so it takes a while for the script to process those kinds of files, but the output seems reasonably accurate.
+It has primarily been created and tested on PDF files but can also handle .doc and possibly PNG and JPEG. It uses OCR (Optical Character Recognition) so it takes a while for the script to process those kinds of files, but the output seems reasonably accurate.
 
 For use with PDFs which contain embedded text & Word Files you may need to install the Python libraries docx2python, pdfplumber, and ArgumentParser.
 
-If you have pip, just use the following on the command line (or however else you install python libraries):
+If you have `pip`, just use the following on the command line (or however else you install python libraries):
+```
 pip3 install docx2python
 pip3 install pdfplumber
 pip3 install argparse
+```
 
 If your document requires the use of OCR (Optical Character Recognition) it uses a Python library "textract" which requires a number of additional source libraries to download.
 
-If you have homebrew and pip, enter these commands in the command line:
-brew cask install xquartz
+If you have `homebrew` and `pip`, enter these commands in the command line:
+```
+brew install xquartz
 brew install poppler antiword unrtf tesseract swig
 pip3 install textract
-
+```
 It may take a while to download everything.
 
-To use the script, use the following commands:
-python3 convertToText.py sample_data outputDirectory
+To use the script, use the following command:
 
-Output is saved in a folder that you name (e.g. output).
-This will read all the files in sample_data, convert everything to .txt with stripped punctuation etc,
-and save it with the same folder structure as sample_data in output.
+```
+python3 convertToText.py
+```
 
-It keeps new lines characters.
-It doesn't deal with tables in .doc files very well.
+This will read all the files in the `input` folder, convert everything to `.txt` with stripped punctuation etc, and save the text files with the original folder structure into the `output` folder.
 
-You can also use -f to maintain formatting in the output, using:
-python3 convertToText.py sample_data -f output
-does the same as above, but maintains formatting - this feature is still under development.
-It works for .docx files but not for PDFs just yet.
+It keeps new lines characters. It doesn't deal with tables in `.doc` files very well.
 
-##
-2. Corpus compilation and cleaning - createCleanCorpus.py
-##
+The script will attempt to maintain formatting in the output. To discard formatting, use the script with the no-formatting option.
+```
+python3 convertToText.py -n
+```
 
-Takes all .txt files in a folder (including subfolders),
-reads as a corpus and provides a few basic cleaning needs.
-Created by Romi Hill (Appen) and Zara Maxwell-Smith (CoEDL).
+## 2. Corpus compilation and cleaning - createCleanCorpus.py
+
+Takes all .txt files in a folder (including subfolders), reads as a corpus and provides a few basic cleaning needs. Created by Romi Hill (Appen) and Zara Maxwell-Smith (CoEDL).
 
 This script was developed during a project to examine Indonesian teaching resources (The Indonesian Way).
 
