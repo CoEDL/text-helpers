@@ -69,6 +69,9 @@ Some sections are useful in cleaning any corpus (lowercasing, numeral identifica
 The scripts can be used in conjunction with `TIW_Experiments.py` to remove dominant languages from your corpus. This helps to reveal noise as well as other languages present in the corpus.
 
 
+Before running the script, move the output files from step1 into the `step2/input` folder.
+
+
 ## 3. Experiments with external lexicons for cleaning and corpus analysis 
 
 `TIW_Experiments.py`
