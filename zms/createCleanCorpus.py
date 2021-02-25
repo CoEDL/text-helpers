@@ -199,6 +199,7 @@ for token in stripExAlpha:
 
 typesInFinal = set(final_tokens)
 
+print(final_tokens)
 
 #############
 
@@ -214,26 +215,33 @@ include the hyphenated word in the first column of a csv,
 and value 1 in second column.
 '''
 
-splitHyphenList = []
-with open(os.path.join(inputFolder, 'manRemnants.csv'), 'r') as csvFile:
-        csvReader = csv.reader(csvFile)
-        for row in csvReader:
-            if row[1] == '1':
-                splitHyphenList.append(row[0])
 manHyphenSplit = []
 
-# test list on next line
-# t = ['udah-sudah', 'eat', 'anak-anak', 'ungu-purple']
+remnants_man_path = os.path.join(inputFolder,'manRemnants.csv')
+if os.path.exists(remnants_man_path):
+    splitHyphenList = []
+    with open(os.path.join(inputFolder, 'manRemnants.csv'), 'r') as csvFile:
+            csvReader = csv.reader(csvFile)
+            for row in csvReader:
+                if row[1] == '1':
+                    splitHyphenList.append(row[0])
 
-for token in final_tokens:
-    if token in splitHyphenList:
-            pattern = "[" + '-' + "]"
-            new_token = re.sub(pattern, " ", token)
-            manHyphenSplit.append(new_token)
-    else:
-        manHyphenSplit.append(token)
+    # test list on next line
+    # t = ['udah-sudah', 'eat', 'anak-anak', 'ungu-purple']
 
-manHyphenSplit = [word for line in manHyphenSplit for word in line.split()]
+    for token in final_tokens:
+        if token in splitHyphenList:
+                pattern = "[" + '-' + "]"
+                new_token = re.sub(pattern, " ", token)
+                manHyphenSplit.append(new_token)
+        else:
+            manHyphenSplit.append(token)
+
+    manHyphenSplit = [word for line in manHyphenSplit for word in line.split()]
+else:
+    print('No manRemnants file found')
+    # fall back to use the results of the previous stage
+    manHyphenSplit = final_tokens
 
 
 '''
@@ -243,24 +251,31 @@ To explicitly remove words,
 make a CSV with words in the first column,
 and the value 1 in the third column
 '''
-
-manRemove = []
-with open(os.path.join(inputFolder,'remnants_ann.csv'), 'r') as csvFile:
-        csvReader = csv.reader(csvFile)
-        for row in csvReader:
-            if row[2] == '1':
-                manRemove.append(row[0])
-
 manFinal_tokens = []
-discard = []
 
-for token in manHyphenSplit:
-    if token in manRemove:
-        discard.append(token)
-    else:
-        manFinal_tokens.append(token)
+remnants_ann_path = os.path.join(inputFolder,'remnants_ann.csv')
+if os.path.exists(remnants_ann_path):
+    manRemove = []
 
-# typesInManFinal = set(manFinal_tokens)
+    with open(os.path.join(inputFolder,'remnants_ann.csv'), 'r') as csvFile:
+            csvReader = csv.reader(csvFile)
+            for row in csvReader:
+                if row[2] == '1':
+                    manRemove.append(row[0])
+
+    discard = []
+
+    for token in manHyphenSplit:
+        if token in manRemove:
+            discard.append(token)
+        else:
+            manFinal_tokens.append(token)
+
+    # typesInManFinal = set(manFinal_tokens)
+else:
+    print('No remnants_ann file found')
+    # fall back to use the results of the previous stage
+    manFinal_tokens = manHyphenSplit
 
 
 #######
