@@ -250,8 +250,9 @@ def readWithNoFormatting(files, inputFolderName, outputFolderName):
 
 
 def main():
-    inputFolderName = '/Users/yourname/git/text-helpers/zms/input/'
-    outputFolderName = '/Users/yourname/git/text-helpers/zms/output/'
+    # assuming people run this from pwd, so use relative paths for simplicity
+    inputFolderName = 'input'
+    outputFolderName = 'output'
     # set to true or false depending on whether you want to keep the formatting of tables etc. or not
     keepFormatting = True
 
