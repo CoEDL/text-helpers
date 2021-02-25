@@ -19,8 +19,6 @@ except LookupError:
     print("nltk punkt not found, downloading...")
     nltk.download('punkt')
 
-# Which file are we reading
-pdf = 'test.pdf'
 
 # Use a handy method to output the results to files rather than printing to screen
 def write_file(filename, content):
@@ -31,56 +29,64 @@ def write_file(filename, content):
     print("wrote to", filename)
 
 # Get the raw messy text from the PDF
-with open(pdf, 'rb') as f:
-    doc = slate.PDF(f)
+# iterate all pdfs in the input dir
 
-### Formatting the text
+input_directory = 'input'
 
-## First approach to getting text into a working format
-# PDF format seems to have random single line breaks in middle of sentences
-# and uses double line breaks for paras.
-# This will replace single line breaks with spaces
-# preserving double breaks for paras.
-paragraphs_1 = doc[0]
-paragraphs_1 = paragraphs_1.replace('\n\n', '•').replace('\n', ' ').replace('•', '\r\n')
-write_file("paragraphs_1.txt", paragraphs_1)
-
-# ## Second approach to getting text into a working format
-# # This doesn't do anything about line breaks
-# # So it isn't accurate for sentence/para separation
-# paragraphs_2 = ' '.join(doc)
-# write_file("paragraphs_2.txt", paragraphs_2)
+for file in os.listdir(input_directory):
+    if not file.endswith(".pdf"):
+        continue
+    with open(os.path.join(input_directory, file), 'rb') as pdf_file:
+        doc = slate.PDF(pdf_file)
 
 
-# # So, let's use paragraphs_1 from here on as the source
+    ### Formatting the text
 
-### Generate a wordlist
-#
-# Tokenise the paras and gets rid of '\n'.
-# Tokens is an array, so make a str as well for str operations
-tokens = nltk.tokenize.word_tokenize(paragraphs_1)
-wordlist = '\n'.join(tokens)
-write_file("wordlist_1.txt", wordlist)
+    ## First approach to getting text into a working format
+    # PDF format seems to have random single line breaks in middle of sentences
+    # and uses double line breaks for paras.
+    # This will replace single line breaks with spaces
+    # preserving double breaks for paras.
+    paragraphs_1 = doc[0]
+    paragraphs_1 = paragraphs_1.replace('\n\n', '•').replace('\n', ' ').replace('•', '\r\n')
+    write_file("paragraphs_1.txt", paragraphs_1)
+
+    # ## Second approach to getting text into a working format
+    # # This doesn't do anything about line breaks
+    # # So it isn't accurate for sentence/para separation
+    # paragraphs_2 = ' '.join(doc)
+    # write_file("paragraphs_2.txt", paragraphs_2)
 
 
-# ### Cleaning the punctuation
+    # # So, let's use paragraphs_1 from here on as the source
 
-## First approach subsets the array of tokens
-punctuation = [',','(',')','*', '**', '***', '****', '*****', '"', '“', '”']
-wordlist_clean_1 = [word for word in tokens if not word in punctuation]
-write_file("wordlist_clean_1.txt", '\n'.join(wordlist_clean_1))
+    ### Generate a wordlist
+    #
+    # Tokenise the paras and gets rid of '\n'.
+    # Tokens is an array, so make a str as well for str operations
+    tokens = nltk.tokenize.word_tokenize(paragraphs_1)
+    wordlist = '\n'.join(tokens)
+    write_file("wordlist_1.txt", wordlist)
 
-# Second approch uses regexp on the str, everything except words and spaces
-wordlist_clean_2 = re.sub(r'[^\w\s]', '', wordlist)
-write_file("wordlist_clean_2.txt", wordlist_clean_2)
 
-# Third approach, regexp with specific punct markss
-strip_pattern = r'[\.\-\?,()_*"“”:;!]'
-# use the third method with either the wordlist ...
-wordlist_clean_3 = re.sub(strip_pattern, '', wordlist)
-write_file("wordlist_clean_3.txt", wordlist_clean_3)
-# ... or the paragraph as input
-paragraphs_1_cleaned = re.sub(strip_pattern, '', paragraphs_1)
-write_file("paragraphs_1_clean.txt", paragraphs_1_cleaned)
+    # ### Cleaning the punctuation
 
-print("done")
+    ## First approach subsets the array of tokens
+    punctuation = [',','(',')','*', '**', '***', '****', '*****', '"', '“', '”']
+    wordlist_clean_1 = [word for word in tokens if not word in punctuation]
+    write_file("wordlist_clean_1.txt", '\n'.join(wordlist_clean_1))
+
+    # Second approch uses regexp on the str, everything except words and spaces
+    wordlist_clean_2 = re.sub(r'[^\w\s]', '', wordlist)
+    write_file("wordlist_clean_2.txt", wordlist_clean_2)
+
+    # Third approach, regexp with specific punct markss
+    strip_pattern = r'[\.\-\?,()_*"“”:;!]'
+    # use the third method with either the wordlist ...
+    wordlist_clean_3 = re.sub(strip_pattern, '', wordlist)
+    write_file("wordlist_clean_3.txt", wordlist_clean_3)
+    # ... or the paragraph as input
+    paragraphs_1_cleaned = re.sub(strip_pattern, '', paragraphs_1)
+    write_file("paragraphs_1_clean.txt", paragraphs_1_cleaned)
+
+    print("done")
