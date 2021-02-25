@@ -331,8 +331,6 @@ del stripExNum
 del exNum
 del stripNum
 del stripNumRetok
-
-
 del stripExAlpha
 
 #############
@@ -383,6 +381,6 @@ count = 0
 for word in minus3Ind:
     if word == 'kliwon':
         count = count + 1
-        #print('enari found')
+        #print('kliwon found')
     else:
         print('word not found')
