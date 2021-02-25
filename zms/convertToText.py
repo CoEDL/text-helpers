@@ -9,6 +9,7 @@ Created by Romi Hill (Appen) for Zara Maxwell-Smith (CoEDL)
 from argparse import ArgumentParser
 import os
 import re
+import sys
 
 from docx2python import docx2python
 import unicodedata
@@ -250,11 +251,19 @@ def readWithNoFormatting(files, inputFolderName, outputFolderName):
 
 
 def main():
+    parser = ArgumentParser(description="This script will help extract text from pdf files.")
     # assuming people run this from pwd, so use relative paths for simplicity
-    inputFolderName = 'input'
-    outputFolderName = 'output'
-    # set to true or false depending on whether you want to keep the formatting of tables etc. or not
-    keepFormatting = True
+    parser.add_argument('-i', '--input_dir', help='Directory of pdf files to read', type=str, default='./input')
+    parser.add_argument('-o', '--output_dir', help='Where the text files will be saved', type=str, default='./output')
+    parser.add_argument('-f', '--formatting', help='Keep formatting of tables etc?', type=bool, default=True)
+    args = parser.parse_args()
+    try:
+        inputFolderName = args.input_dir
+        outputFolderName = args.output_dir
+        keepFormatting = args.formatting
+    except Exception:
+        parser.print_help()
+        sys.exit(0)
 
     if not os.path.exists(outputFolderName):
         os.makedirs(outputFolderName)
@@ -264,7 +273,6 @@ def main():
 
     if keepFormatting:
         readWithFormatting(files, inputFolderName, outputFolderName)
-
     else:
         readWithNoFormatting(files, inputFolderName, outputFolderName)
 
