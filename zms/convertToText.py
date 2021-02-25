@@ -133,6 +133,7 @@ def readWithFormatting(files, inputFolderName, outputFolderName):
     """
     Converts files into .txt
     Maintains formatting as much as possible
+    Uses different libraries depending on file types
     """
     
     # go over every file in list containing all files
@@ -185,6 +186,7 @@ def readWithNoFormatting(files, inputFolderName, outputFolderName):
     """
     Converts files into .txt
     Strips punctuations and multiple new lines
+    Brute-force approach uses textract for all file types
     """
 
     # go over every file in list containing all files
@@ -241,8 +243,8 @@ def main():
     parser.add_argument('-i', '--input_dir', help='Directory of pdf files to read', type=str, default='./input')
     parser.add_argument('-o', '--output_dir', help='Where the text files will be saved', type=str, default='./output')
     # whether or not to try and keep the original formatting
-    parser.add_argument('-f', '--formatting', help='Keep formatting', dest='formatting', action='store_true')
     parser.add_argument('-n', '--no-formatting', help='Discard formatting', dest='formatting', action='store_false')
+    parser.add_argument('-f', '--formatting', help='Maintain original formatting', dest='formatting', action='store_true')
     args = parser.parse_args()
 
     try:
@@ -252,6 +254,8 @@ def main():
     except Exception:
         parser.print_help()
         sys.exit(0)
+
+    print(f"keepFormatting {keepFormatting}")
 
     if not os.path.exists(outputFolderName):
         os.makedirs(outputFolderName)
