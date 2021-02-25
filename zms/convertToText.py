@@ -64,6 +64,7 @@ def readPDFFile(inputFile):
 
     # extract the text from PDF
     doc = textract.process(inputFile, method='pdftotext').decode("utf-8")
+
     # if there's no text, then doc should just consist of white spaces
     # it might have some pesky characters like page breaks or line breaks,
     # which is why we can't assume doc is an empty string
@@ -85,19 +86,16 @@ def readPDFFile_old(inputFile):
 
     # create an empty string which will store the text in the pdf 
     doc = ''
-    with pdfplumber.open(inputFile) as inFile:
+    with pdfplumber.open(inputFile) as source_file:
         # read in the string by page
-        for page in inFile.pages:
+        for page in source_file.pages:
             # try to extract text from the pdf
             try:
                 doc = doc + page.extract_text()
             # if that doesn't work, end the function. The script can't handle these kinds of files
             except:
                 print('\tPDF is unreadable')
-                inFile.close()
                 return doc
-        # tell Python to close the input file. 
-        inFile.close()
     return doc
 
 # ---------------------------------------------------------------------- #
@@ -159,7 +157,7 @@ def readWithFormatting(files, inputFolderName, outputFolderName):
             print('Processing: {}'.format(inputFile))
             doc = textract.process(inputFile).decode("utf-8")
             # uses regex to replace repeated new lines into one newline
-            doc= re.sub(r'\n\n*', '\n', doc)
+            doc = re.sub(r'\n\n*', '\n', doc)
 
         elif fileExtension == '.pdf':
             print('Processing: {}'.format(inputFile))
@@ -170,16 +168,15 @@ def readWithFormatting(files, inputFolderName, outputFolderName):
         elif fileExtension == '.png' or fileExtension == '.jpeg' or fileExtension == '.jpg':
             print('Processing: {}'.format(inputFile))
             # uses OCR to extract the text
-            doc = textract.process(inputFile, method='tesseract', language = 'eng+ind').decode("utf-8")
+            doc = textract.process(inputFile, method='tesseract', language='eng+ind').decode("utf-8")
 
         if doc:
             # standardise the string (e.g. convert ligatures, other encoding issues)
             doc = doc.translate(LIGATURES)
             # save the string as the file name + .txt
             newFileName = outputPathFileName + '.txt'
-            with open(newFileName, 'w') as outFile:
-                outFile.write(doc)
-                outFile.close()
+            with open(newFileName, 'w') as text_file:
+                text_file.write(doc)
 
 # ---------------------------------------------------------------------- #
 
@@ -216,7 +213,7 @@ def readWithNoFormatting(files, inputFolderName, outputFolderName):
         # which is why we can't assume doc is an empty string
         if doc.isspace():
             # use OCR to try to convert the characters in the file into a string
-            doc = textract.process(inputFile, method='tesseract', language = 'eng+ind').decode("utf-8")
+            doc = textract.process(inputFile, method='tesseract', language='eng+ind').decode("utf-8")
 
         # only keep word characters
         doc = re.sub(r'[^\w\s]','',doc)
@@ -225,15 +222,13 @@ def readWithNoFormatting(files, inputFolderName, outputFolderName):
         doc = re.sub(r'\n\n*', '\n', doc)
 
         doc = doc.translate(LIGATURES)
-            # save the string as the file name + .txt
-        newFileName = outputPathFileName + '.txt'
 
         # store the new file name with .txt
         newFileName = outputPathFileName + '.txt'
+
         # write and save the file
-        with open(newFileName, 'w') as outFile:
-            outFile.write(doc)
-            outFile.close()
+        with open(newFileName, 'w') as text_file:
+            text_file.write(doc)
 
 # ---------------------------------------------------------------------- #
 
