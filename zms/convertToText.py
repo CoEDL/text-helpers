@@ -240,11 +240,11 @@ def readWithNoFormatting(files, inputFolderName, outputFolderName):
 def main():
     parser = ArgumentParser(description="This script will help extract text from pdf files.")
     # assuming people run this from pwd, so use relative paths for simplicity
-    parser.add_argument('-i', '--input_dir', help='Directory of pdf files to read', type=str, default='./input')
-    parser.add_argument('-o', '--output_dir', help='Where the text files will be saved', type=str, default='./output')
+    parser.add_argument('-i', '--input_dir', help='Directory of pdf files to read', type=str, default='./step1/input')
+    parser.add_argument('-o', '--output_dir', help='Where the files will be saved', type=str, default='./step1/output')
     # whether or not to try and keep the original formatting
     parser.add_argument('-n', '--no-formatting', help='Discard formatting', dest='formatting', action='store_false')
-    parser.add_argument('-f', '--formatting', help='Maintain original formatting', dest='formatting', action='store_true')
+    parser.add_argument('-f', '--formatting', help='Maintain formatting', dest='formatting', action='store_true')
     args = parser.parse_args()
 
     try:

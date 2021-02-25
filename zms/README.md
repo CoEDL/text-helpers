@@ -16,18 +16,18 @@ The text extraction section was created by Romi Hill (Appen) for Zara Maxwell-Sm
 
 It has primarily been created and tested on PDF files but can also handle .doc and possibly PNG and JPEG. It uses OCR (Optical Character Recognition) so it takes a while for the script to process those kinds of files, but the output seems reasonably accurate.
 
-For use with PDFs which contain embedded text & Word Files you may need to install the Python libraries docx2python, pdfplumber, and ArgumentParser.
+For use with Word files and PDFs which contain embedded text you may need to install the Python libraries `docx2python` and `pdfplumber`.
 
-If you have `pip`, just use the following on the command line (or however else you install python libraries):
+If you have `pip`, just use the following on the command line (or however else you install Python libraries):
 ```
 pip3 install docx2python
 pip3 install pdfplumber
 pip3 install argparse
 ```
 
-If your document requires the use of OCR (Optical Character Recognition) it uses a Python library "textract" which requires a number of additional source libraries to download.
+If your document requires the use of OCR (Optical Character Recognition), the script uses a Python library "textract" which requires a number of additional source libraries to download.
 
-If you have `homebrew` and `pip`, enter these commands in the command line:
+For Mac OS, [install Homebrew](https://brew.sh/), then install these libraries:
 ```
 brew install xquartz
 brew install poppler antiword unrtf tesseract swig
@@ -62,11 +62,11 @@ It will not run as one program, but is intended to step through a new corpus. As
 
 The initial section has broad sweep cleaning functionality, narrowing into specific tasks.
 
-The section '''Cleaning after manual annotation''' writes a list of corpus types to csv file for manual annotation.  The csv file can then be manually annotated and read back in to remove/alter specific strings.
+The section *Cleaning after manual annotation* writes a list of corpus types to csv file for manual annotation.  The csv file can then be manually annotated and read back in to remove/alter specific strings.
 
 Some sections are useful in cleaning any corpus (lowercasing, numeral identification, etc.) but others are very specific to working with Indonesian or to working with language teaching resources, or both.
 
-The scripts can be used in conjunction with TIW_Experiments.py to remove dominant languages from your corpus. This helps to reveal noise as well as other languages present in the corpus.
+The scripts can be used in conjunction with `TIW_Experiments.py` to remove dominant languages from your corpus. This helps to reveal noise as well as other languages present in the corpus.
 
 
 ## 3. Experiments with external lexicons for cleaning and corpus analysis 
