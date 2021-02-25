@@ -147,11 +147,6 @@ def readWithFormatting(files, inputFolderName, outputFolderName):
         # get the output file path (not including the filename)
         outputPath = os.path.dirname(outputPathFileName)
 
-        # check whether the output path exists
-        if not os.path.exists(outputPath):
-            # if it doesn't, create it
-            os.makedirs(outputPath)
-
         if fileExtension == '.docx':
             print('Processing: {}'.format(inputFile))
             # uses docx2python for now, since it's probably easier to keep the formatting consistent later on
@@ -208,10 +203,6 @@ def readWithNoFormatting(files, inputFolderName, outputFolderName):
         # store the output path without filename
         outputPath = os.path.dirname(outputPathFileName)
 
-        # create path to output folder if it doesn't exist
-        if not os.path.exists(outputPath):
-            os.makedirs(outputPath)
-
         # prints to terminal which file is being processed
         # will be useful for debugging if there's an error on one of the files
         print('Processing: {}'.format(inputFile))
@@ -246,7 +237,6 @@ def readWithNoFormatting(files, inputFolderName, outputFolderName):
 
 # ---------------------------------------------------------------------- #
 
-# ---------------------------------------------------------------------- #
 # ----- MAIN FUNCTION ----- #
 
 
@@ -255,8 +245,11 @@ def main():
     # assuming people run this from pwd, so use relative paths for simplicity
     parser.add_argument('-i', '--input_dir', help='Directory of pdf files to read', type=str, default='./input')
     parser.add_argument('-o', '--output_dir', help='Where the text files will be saved', type=str, default='./output')
-    parser.add_argument('-f', '--formatting', help='Keep formatting of tables etc?', type=bool, default=True)
+    # whether or not to try and keep the original formatting
+    parser.add_argument('-f', '--formatting', help='Keep formatting', dest='formatting', action='store_true')
+    parser.add_argument('-n', '--no-formatting', help='Discard formatting', dest='formatting', action='store_false')
     args = parser.parse_args()
+
     try:
         inputFolderName = args.input_dir
         outputFolderName = args.output_dir
